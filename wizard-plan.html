@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weblo - Select a Plan</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wizard-layout">
+        <div class="wizard-left">
+            <header class="wizard-header">
+                <div class="logo">Weblo.</div>
+            </header>
+
+            <div class="wizard-content-wrapper">
+                <div class="stepper-container">
+                    <div class="stepper-line"></div>
+                    <!-- Step 1-5 Indicators (Done) -->
+                    <div class="step-item">
+                        <div class="step-circle-small"></div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-circle-small"></div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-circle-small"></div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-circle-small"></div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-circle-small"></div>
+                    </div>
+                    <!-- Step 6 Indicator (Active) -->
+                    <div class="step-item active">
+                        <div class="step-circle">6</div>
+                    </div>
+                </div>
+
+                <div class="wizard-form-container" style="max-width: 700px;">
+                    <div class="wizard-top-bar">
+                        <a href="wizard-step5.html" class="go-back">← Go Back</a>
+                        <a href="index.html" class="btn btn-dark btn-sm exit-btn">Exit</a>
+                    </div>
+
+                    <h1 class="wizard-title">Almost Done</h1>
+                    <p class="step-subtitle">Select a plan to launch your website.</p>
+
+                    <div class="plans-list">
+                        <!-- Starter Plan -->
+                        <div class="plan-item selected" onclick="togglePlan(this, 'Starter', 149)">
+                            <div class="plan-header-row">
+                                <div class="plan-info">
+                                    <h3 class="plan-name">Starter</h3>
+                                    <p class="plan-tagline">Pay-per-build, ideal for 1-time website creation.</p>
+                                </div>
+                                <div class="plan-cost">$149</div>
+                            </div>
+                            <div class="plan-details">
+                                <ul class="feature-list">
+                                    <li>1 AI-generated website (up to 5 pages recommended)</li>
+                                    <li>Mobile-responsive design</li>
+                                    <li>Basic SEO (titles, descriptions)</li>
+                                    <li>Standard templates</li>
+                                    <li>14-day post-delivery edit window</li>
+                                    <li>Email support (48–72 hr SLA)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Business Plan -->
+                        <div class="plan-item" onclick="togglePlan(this, 'Business', 39)">
+                            <div class="plan-header-row">
+                                <div class="plan-info">
+                                    <h3 class="plan-name">Business</h3>
+                                    <p class="plan-tagline">Build up to 5 websites + export source code.</p>
+                                </div>
+                                <div class="plan-cost">$39 <span class="period">/ Month</span></div>
+                            </div>
+                            <div class="plan-details">
+                                <ul class="feature-list">
+                                    <li>Up to 5 AI-generated websites</li>
+                                    <li><strong>Source code export</strong></li>
+                                    <li>Premium template access</li>
+                                    <li>Advanced SEO controls</li>
+                                    <li>Team seats (2–5 members)</li>
+                                    <li>Priority email & chat support</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Enterprise Plan -->
+                        <div class="plan-item" onclick="togglePlan(this, 'Enterprise', 79)">
+                            <div class="plan-header-row">
+                                <div class="plan-info">
+                                    <h3 class="plan-name">Enterprise</h3>
+                                    <p class="plan-tagline">Everything from above + white-label, SLA, and advanced
+                                        features.</p>
+                                </div>
+                                <div class="plan-cost">$79 <span class="period">/ Month</span></div>
+                            </div>
+                            <div class="plan-details">
+                                <ul class="feature-list">
+                                    <li>Unlimited websites</li>
+                                    <li>White-label editor</li>
+                                    <li>SLA-backed uptime</li>
+                                    <li>Dedicated account manager</li>
+                                    <li>Custom integrations</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 32px;">
+                        <button type="button" class="btn btn-dark btn-block" id="continuePayBtn"
+                            onclick="goToPayment()">Continue to Payment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wizard-right">
+            <!-- Placeholder -->
+        </div>
+    </div>
+    <script src="wizard.js"></script>
+    <script>
+        // Init logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = loadData();
+            // Default to Starter if nothing selected, or restore selection
+            if (data.plan) {
+                const items = document.querySelectorAll('.plan-item');
+                items.forEach(item => {
+                    item.classList.remove('selected');
+                    if (item.querySelector('.plan-name').innerText === data.plan) {
+                        item.classList.add('selected');
+                    }
+                });
+            } else {
+                // Ensure first one is selected by default logic or none? User image shows Starter open.
+                // We leave Starter with 'selected' class in HTML hardcoded for now, or ensure logic sets it.
+                // The HTML has "selected" on Starter.
+                saveData({ ...data, plan: 'Starter', planPrice: 149 });
+            }
+        });
+
+        function togglePlan(element, planName, price) {
+            // Remove selected from all
+            document.querySelectorAll('.plan-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            // Add to clicked
+            element.classList.add('selected');
+
+            // Save Data
+            const data = loadData();
+            data.plan = planName;
+            data.planPrice = price;
+            saveData(data);
+        }
+
+        function goToPayment() {
+            window.location.href = 'payment.html';
+        }
+    </script>
+</body>
+
+</html>

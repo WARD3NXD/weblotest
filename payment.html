@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weblo - Secure Payment</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wizard-layout">
+        <!-- Left Side: Payment Form -->
+        <div class="wizard-left">
+            <header class="wizard-header">
+                <div class="logo">Weblo.</div>
+                <div
+                    style="font-size: 13px; color: #666; margin-top: 4px; display: flex; align-items: center; gap: 6px;">
+                    <span>🔒 Secure Checkout</span>
+                </div>
+            </header>
+
+            <div class="wizard-content-wrapper">
+                <div class="stepper-container">
+                    <!-- Simplified stepper or just a back button icon? Keeping consistent layout spacers -->
+                    <div style="width: 100%;"></div>
+                </div>
+
+                <div class="wizard-form-container" style="padding-top: 0;">
+                    <div class="wizard-top-bar">
+                        <a href="wizard-plan.html" class="go-back">← Back to Plans</a>
+                    </div>
+
+                    <h1 class="wizard-title" style="margin-bottom: 8px;">Payment Details</h1>
+                    <p class="step-subtitle" style="margin-bottom: 32px;">Complete your purchase to build your site.</p>
+
+                    <div class="wizard-form">
+                        <div class="form-group">
+                            <label style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500;">Email
+                                Address</label>
+                            <input type="email" class="form-control" id="payEmail" placeholder="you@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500;">Card
+                                Details</label>
+                            <div
+                                style="border: 1px solid #ddd; border-radius: 6px; padding: 12px; display: flex; align-items: center; gap: 12px; background: #fff;">
+                                <span style="font-size: 20px;">💳</span>
+                                <input type="text" placeholder="Card number"
+                                    style="border: none; outline: none; flex: 1; font-size: 14px;">
+                                <input type="text" placeholder="MM/YY"
+                                    style="border: none; outline: none; width: 60px; font-size: 14px;">
+                                <input type="text" placeholder="CVC"
+                                    style="border: none; outline: none; width: 40px; font-size: 14px;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label
+                                style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500;">Cardholder
+                                Name</label>
+                            <input type="text" class="form-control" placeholder="Name on card">
+                        </div>
+
+                        <button class="btn btn-dark btn-block" onclick="processPayment()" style="margin-top: 16px;">Pay
+                            & Build Website</button>
+
+                        <div style="margin-top: 16px; font-size: 12px; color: #888; text-align: center;">
+                            By confirming, you agree to Weblo's <a href="#"
+                                style="color: inherit; text-decoration: underline;">Terms</a>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Order Summary -->
+        <div class="wizard-right payment-right-panel"
+            style="background-color: #f5f5f5; display: flex; align-items: center; justify-content: center; position: relative;">
+            <!-- Summary Card -->
+            <div class="payment-summary-card">
+                <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 24px;">Order Summary</h3>
+
+                <div class="summary-item">
+                    <div>
+                        <div class="summary-plan-name" id="summaryPlanName">Starter Plan</div>
+                        <div class="summary-plan-period" style="font-size: 12px; color: #666;">Billed once</div>
+                    </div>
+                    <div class="summary-price" id="summaryPlanPrice">$199.00</div>
+                </div>
+
+                <ul id="summaryFeatures"
+                    style="margin: 20px 0; padding-left: 20px; font-size: 13px; color: #555; line-height: 1.6;">
+                    <li>Mobile-responsive</li>
+                    <li>Basic SEO</li>
+                    <li>1-year hosting included</li>
+                </ul>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-total-row">
+                    <span>Total due</span>
+                    <span id="summaryTotal">$199.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="wizard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = loadData();
+            if (data.email) document.getElementById('payEmail').value = data.email;
+
+            if (data.plan) {
+                document.getElementById('summaryPlanName').innerText = data.plan;
+                const price = data.planPrice || 0;
+                const symbol = '$'; // Currency logic...
+                document.getElementById('summaryPlanPrice').innerText = symbol + price;
+                document.getElementById('summaryTotal').innerText = symbol + price;
+            }
+        });
+
+        function processPayment() {
+            const btn = document.querySelector('.btn-dark');
+            const originalText = btn.innerText;
+            btn.innerText = 'Processing...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                window.location.href = 'dashboard-build.html';
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>

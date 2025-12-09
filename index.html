@@ -14,7 +14,7 @@
 <body>
     <header class="header">
         <div class="container header-container">
-            <div class="logo">Weblo.</div>
+            <a href="index.html" class="logo">Weblo.</a>
             <a href="#" class="btn btn-dark btn-sm">Sign In</a>
         </div>
     </header>
@@ -113,6 +113,17 @@
             <p>Footer</p>
         </div>
     </footer>
+
+    <script>
+        document.querySelector('.btn-send').addEventListener('click', function () {
+            const input = document.querySelector('.hero-prompt-input');
+            const prompt = input.value;
+            if (prompt.trim()) {
+                localStorage.setItem('weblo_prompt', prompt);
+                window.location.href = 'chat-1.html';
+            }
+        });
+    </script>
 </body>
 
 </html>

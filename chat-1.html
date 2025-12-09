@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weblo - Chat</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">Weblo.</a>
+            <a href="#" class="btn btn-dark btn-sm">Sign In</a>
+        </div>
+    </header>
+
+    <div class="chat-layout">
+        <div class="chat-panel-left">
+            <div class="chat-history">
+                <div class="chat-message-user">
+                    Create a website for my bakery called SweetCrust. We sell fresh pastries and custom cakes. Our
+                    customers are local families and office workers. Make the tone warm and friendly, and focus on
+                    helping customers place custom cake orders easily.
+                </div>
+                <div class="chat-message-system" style="margin-top: 24px; animation: fadeIn 0.5s ease-out;">
+                    <!--div> <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #333;">Here is what we’ll
+                        do</h3></div>-->
+
+                    <div class="plans-list">
+                        <!-- Single Accordion Item -->
+                        <div class="plan-item-single selected">
+                            <!-- Default open as per screenshot roughly, or closed? Screenshot shows expanded. Let's default open or let js handle. I'll make it selected by default or let user click. User said "inside it should be only grouped list", implying structure. -->
+                            <div class="plan-header-single">
+                                <div class="plan-header-title">Here is what we’ll do</div>
+                            </div>
+                            <div class="plan-details-single">
+
+                                <div class="plan-group" id="plan-step-1">
+                                    <div class="plan-group-status"></div>
+                                    <div class="plan-group-title">Brand Setup</div>
+                                    <div class="plan-group-text">Apply SweetCrust name, warm tone, pastel colour theme
+                                    </div>
+                                    <div class="plan-group-text">Use soft rounded font pairing</div>
+                                </div>
+
+                                <div class="plan-group" id="plan-step-2">
+                                    <div class="plan-group-status"></div>
+                                    <div class="plan-group-title">Homepage</div>
+                                    <div class="plan-group-text">Hero message: “Freshly baked happiness, made just for
+                                        you.”</div>
+                                    <div class="plan-group-text">Highlight pastries + primary CTA for custom cake orders
+                                    </div>
+                                </div>
+
+                                <div class="plan-group" id="plan-step-3">
+                                    <div class="plan-group-status"></div>
+                                    <div class="plan-group-title">Menu Page</div>
+                                    <div class="plan-group-text">Showcase pastries in simple categories</div>
+                                    <div class="plan-group-text">Add a “Most Loved” section for families & office
+                                        workers</div>
+                                </div>
+
+                                <div class="plan-group" id="plan-step-4">
+                                    <div class="plan-group-status"></div>
+                                    <div class="plan-group-title">Custom Cake Order Page</div>
+                                    <div class="plan-group-text">Guided form (size → flavour → decoration → notes)</div>
+                                    <div class="plan-group-text">Quick price estimate + preview card</div>
+                                    <div class="plan-group-text">Pickup/delivery options</div>
+                                </div>
+
+                                <div class="plan-group" id="plan-step-5">
+                                    <div class="plan-group-status"></div>
+                                    <div class="plan-group-title">Contact Page</div>
+                                    <div class="plan-group-text">Location, timings, quick-call button</div>
+                                    <div class="plan-group-text">Optional Google Maps embed</div>
+                                </div>
+
+                                <div class="plan-group" id="plan-step-6">
+                                    <div class="plan-group-status"></div>
+                                    <div class="plan-group-title">Theme & Tone</div>
+                                    <div class="plan-group-text">Friendly microcopy across all pages</div>
+                                    <div class="plan-group-text">Warm visuals, pastel colours, cozy bakery mood</div>
+                                    <!-- Palette -->
+                                    <div class="plan-group-text palette-container">
+                                        <div class="palette-header">
+                                            <div class="palette-title">Palette 1</div>
+                                            <div class="palette-refresh">↻</div>
+                                        </div>
+                                        <div class="palette-swatches">
+                                            <div class="swatch" style="background-color: #9E9E9E;"></div>
+                                            <!-- Dark Gray -->
+                                            <div class="swatch" style="background-color: #757575;"></div>
+                                            <!-- Darker Gray -->
+                                            <div class="swatch" style="background-color: #D6D6D6;"></div>
+                                            <!-- Light Gray -->
+                                            <div class="swatch" style="background-color: #E0E0E0;"></div>
+                                            <!-- Lighter Gray -->
+                                            <div class="swatch" style="background-color: #EEEEEE;"></div>
+                                            <!-- Very Light Gray -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Success Message (Hidden by default) -->
+                    <div class="chat-message-system" id="success-message"
+                        style="margin-top: 24px; animation: fadeIn 0.5s ease-out; display: none;">
+                        <div style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 8px;">🎉 Your Website
+                            Is Ready, SweetCrust!</div>
+                        <div style="font-size: 14px; color: #444; line-height: 1.5; margin-bottom: 12px;">
+                            Weblo AI has clarified your brand, filled details, optimized structure, and built a friendly
+                            bakery website for families and office workers.
+                            <br><br>
+                            SweetCrust now has a complete, user-friendly online presence that helps customers explore
+                            pastries and place custom cake orders effortlessly.
+                            <br><br>
+                            Want to refine anything? Just tell me what you’d like to adjust next
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="chat-confirm-wrapper" id="confirm-wrapper">
+                <div class="confirm-text">Do you like it?</div>
+                <div class="confirm-actions">
+                    <button class="btn btn-dark" id="btn-confirm">Confirm</button>
+                    <button class="btn btn-light-gray" id="btn-doubts">Have doubts</button>
+                </div>
+            </div>
+
+            <div class="chat-input-wrapper" id="input-wrapper" style="display: none;">
+                <textarea class="chat-input" placeholder="Describe your website"></textarea>
+                <div class="chat-input-actions">
+                    <button class="btn-icon" title="Attach">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button class="btn-icon btn-send" title="Send">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="22" y1="2" x2="11" y2="13" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <polygon points="22 2 15 22 11 13 2 9 22 2" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="chat-panel-right">
+            <div class="placeholder-text">Illustrations</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const prompt = localStorage.getItem('weblo_prompt');
+            if (prompt) {
+                const userMessage = document.querySelector('.chat-message-user');
+                if (userMessage) {
+                    userMessage.textContent = prompt;
+                }
+                localStorage.removeItem('weblo_prompt');
+            }
+
+            // Accordion Logic
+            // Accordion Logic
+            const planHeader = document.querySelector('.plan-header-single');
+            if (planHeader) {
+                planHeader.addEventListener('click', () => {
+                    planHeader.parentElement.classList.toggle('selected');
+                });
+            }
+
+            // Have Doubts Interaction
+            const btnDoubts = document.getElementById('btn-doubts');
+            const confirmWrapper = document.getElementById('confirm-wrapper');
+            const inputWrapper = document.getElementById('input-wrapper');
+            const btnConfirm = document.getElementById('btn-confirm');
+
+            if (btnDoubts && confirmWrapper && inputWrapper) {
+                btnDoubts.addEventListener('click', () => {
+                    confirmWrapper.style.display = 'none';
+                    inputWrapper.style.display = 'block';
+                });
+            }
+
+            // Execution Simulation
+            if (btnConfirm) {
+                btnConfirm.addEventListener('click', async () => {
+                    confirmWrapper.style.display = 'none';
+
+                    // Open accordion if closed
+                    const planHeader = document.querySelector('.plan-header-single');
+                    const planItem = planHeader.parentElement;
+                    if (!planItem.classList.contains('selected')) {
+                        planItem.classList.add('selected');
+                    }
+
+                    const steps = [1, 2, 3, 4, 5, 6];
+
+                    for (const stepId of steps) {
+                        const stepEl = document.getElementById(`plan-step-${stepId}`);
+                        if (!stepEl) continue;
+
+                        const statusEl = stepEl.querySelector('.plan-group-status');
+
+                        // Set loading state
+                        stepEl.classList.add('loading');
+                        statusEl.innerHTML = '<div class="spinner"></div>';
+
+                        // Simulate work
+                        await new Promise(r => setTimeout(r, 1500));
+
+                        // Set completed state
+                        stepEl.classList.remove('loading');
+                        stepEl.classList.add('completed');
+                        statusEl.innerHTML = '<span class="checkmark-icon">✔</span>';
+
+                        // Hide details
+                        const textItems = stepEl.querySelectorAll('.plan-group-text');
+                        textItems.forEach(el => el.style.display = 'none');
+                    }
+
+                    // Show success message
+                    const successMsg = document.getElementById('success-message');
+                    if (successMsg) {
+                        successMsg.style.display = 'block';
+
+                        // Re-enable chat input
+                        if (inputWrapper) {
+                            inputWrapper.style.display = 'block';
+                        }
+
+                        // Scroll to bottom
+                        const chatHistory = document.querySelector('.chat-history');
+                        if (chatHistory) chatHistory.scrollTop = chatHistory.scrollHeight;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

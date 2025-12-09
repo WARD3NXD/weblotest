@@ -1193,6 +1193,20 @@ body {
     margin-bottom: 16px;
 }
 
+.checkmark-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+}
+
 .plan-group-title {
     font-size: 14px;
     font-weight: 700;

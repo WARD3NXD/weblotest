@@ -216,6 +216,46 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Progress Accordion (Initially Hidden) -->
+                        <div class="plan-item-single" id="progress-accordion" style="display: none; margin-top: 16px;">
+                            <div class="plan-header-single">
+                                <div class="plan-header-title">Progress</div>
+                            </div>
+                            <div class="plan-details-single">
+                                <div style="padding: 16px; padding-top: 20px;">
+                                    <div class="plan-group" id="plan-step-1">
+                                        <div class="plan-group-status"></div>
+                                        <div class="plan-group-title">Brand Setup</div>
+                                        <div class="plan-group-text">Configuring brand assets...</div>
+                                    </div>
+                                    <div class="plan-group" id="plan-step-2">
+                                        <div class="plan-group-status"></div>
+                                        <div class="plan-group-title">Homepage</div>
+                                        <div class="plan-group-text">Building hero & layout...</div>
+                                    </div>
+                                    <div class="plan-group" id="plan-step-3">
+                                        <div class="plan-group-status"></div>
+                                        <div class="plan-group-title">Menu Page</div>
+                                        <div class="plan-group-text">Setting up product grid...</div>
+                                    </div>
+                                    <div class="plan-group" id="plan-step-4">
+                                        <div class="plan-group-status"></div>
+                                        <div class="plan-group-title">Custom Cake Order Page</div>
+                                        <div class="plan-group-text">Generating forms...</div>
+                                    </div>
+                                    <div class="plan-group" id="plan-step-5">
+                                        <div class="plan-group-status"></div>
+                                        <div class="plan-group-title">Contact Page</div>
+                                        <div class="plan-group-text">Adding location data...</div>
+                                    </div>
+                                    <div class="plan-group" id="plan-step-6">
+                                        <div class="plan-group-status"></div>
+                                        <div class="plan-group-title">Theme & Tone</div>
+                                        <div class="plan-group-text">Applying styles...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Success Message (Hidden by default) -->
@@ -418,7 +458,8 @@
 
                         stepEl.classList.remove('loading');
                         stepEl.classList.add('completed');
-                        statusEl.innerHTML = '<span class="checkmark-icon">✔</span>';
+                        // Use the styled checkmark
+                        statusEl.innerHTML = '<span class="checkmark-icon">✓</span>';
 
                         const textItems = stepEl.querySelectorAll('.plan-group-text');
                         textItems.forEach(el => el.style.display = 'none');

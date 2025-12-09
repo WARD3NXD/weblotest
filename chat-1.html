@@ -217,12 +217,12 @@
                             </div>
                         </div>
                         <!-- Progress Accordion (Initially Hidden) -->
-                        <div class="plan-item-single" id="progress-accordion" style="display: none; margin-top: 16px;">
+                        <div class="plan-item-single" id="progress-accordion" style="display: none;">
                             <div class="plan-header-single">
                                 <div class="plan-header-title">Progress</div>
                             </div>
                             <div class="plan-details-single">
-                                <div style="padding: 16px; padding-top: 20px;">
+                                <div style="padding: 16px; padding-top: 24px;">
                                     <div class="plan-group" id="plan-step-1">
                                         <div class="plan-group-status"></div>
                                         <div class="plan-group-title">Brand Setup</div>
@@ -345,41 +345,26 @@
 
             // Execution Simulation
             // Execution Simulation
-            // Flow: Implementation Plan -> Plan Selection -> Payment -> Build (Progress)
+            // Execution Simulation
+            // Flow: Implementation Plan -> Plan Selection -> Redirect Payment -> Build (Progress)
             const planSelectionAccordion = document.getElementById('plan-selection-accordion');
             const btnConfirmPlan = document.getElementById('btn-confirm-plan');
-            const paymentAccordion = document.getElementById('payment-accordion');
-            const btnPayBuild = document.getElementById('btn-pay-build');
-            const successMsg = document.getElementById('success-message');
             const progressAccordion = document.getElementById('progress-accordion');
+            const successMsg = document.getElementById('success-message');
 
             // 1. Confirm Implementation Plan -> Show Select Plan
             if (btnConfirm) {
                 btnConfirm.addEventListener('click', () => {
                     confirmWrapper.style.display = 'none';
-
-                    // Close Impl Plan & Mark Accepted
-                    // We assume the first plan-item-single inside visible list (excluding the top system one which is static)
-                    // The "Here is what we'll do" item is selected.
-                    const planItem = document.querySelector('.plan-item-single.selected');
-                    if (planItem) {
-                        planItem.classList.remove('selected');
-                        planItem.classList.add('accepted');
-                        const headerTitle = planItem.querySelector('.plan-header-title');
-                        if (headerTitle) headerTitle.innerText = "Implementation plan accepted";
-                    }
-
-                    // Open Plan Selection
+                    markimplPlanAccepted();
                     if (planSelectionAccordion) {
                         planSelectionAccordion.style.display = 'block';
-                        setTimeout(() => {
-                            planSelectionAccordion.classList.add('selected');
-                        }, 50);
+                        setTimeout(() => planSelectionAccordion.classList.add('selected'), 50);
                     }
                 });
             }
 
-            // Plan Card Selection Logic (Mini)
+            // Plan Card Selection
             const planCards = document.querySelectorAll('.plan-card');
             planCards.forEach(card => {
                 card.addEventListener('click', () => {
@@ -392,98 +377,111 @@
                 });
             });
 
-            // 2. Confirm Plan Selection -> Show Payment
+            // 2. Confirm Plan Selection -> Redirect to Payment
             if (btnConfirmPlan) {
                 btnConfirmPlan.addEventListener('click', () => {
-                    // Close Plan Selection & Mark Accepted
-                    if (planSelectionAccordion) {
-                        planSelectionAccordion.classList.remove('selected');
-                        planSelectionAccordion.classList.add('accepted');
-                        // Hide it completely to match screenshot? Or keep it? Screenshot doesn't show it.
-                        // "No mate, we will show Plans first then ask for payment page"
-                        // I'll keep it visible but closed for now, unless instructed to hide.
+                    // Get selected plan
+                    const selectedPlan = document.querySelector('.plan-card.selected');
+                    let planType = 'Starter';
+                    if (selectedPlan && selectedPlan.id === 'plan-business') {
+                        planType = 'Business';
                     }
-
-                    // Open Payment
-                    if (paymentAccordion) {
-                        paymentAccordion.style.display = 'block';
-                        setTimeout(() => {
-                            paymentAccordion.classList.add('selected');
-                        }, 50);
-                    }
+                    // Redirect to payment
+                    window.location.href = `payment.html?plan=${planType}`;
                 });
             }
 
-            // 3. Pay -> Build Simulation
-            if (btnPayBuild) {
-                btnPayBuild.addEventListener('click', async () => {
-                    const originalText = btnPayBuild.innerText;
-                    btnPayBuild.innerText = 'Processing...';
+            // Helper to mark Implementation Plan as Accepted
+            function markimplPlanAccepted() {
+                const planItem = document.querySelector('.plan-item-single.selected') ||
+                    document.querySelectorAll('.plan-item-single')[1]; // Fallback to 2nd item (Implementation Plan)
+                if (planItem) {
+                    planItem.classList.remove('selected');
+                    planItem.classList.add('accepted');
+                    const headerTitle = planItem.querySelector('.plan-header-title');
+                    if (headerTitle) headerTitle.innerText = "Implementation plan accepted";
+                }
+            }
 
-                    await new Promise(r => setTimeout(r, 1000));
+            // Check for Payment Success on Load
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('status') === 'paid') {
+                // Restore State
+                const userMessage = document.querySelector('.chat-message-user');
+                if (userMessage) {
+                    // Optional: Restore prompt if needed, or keep generic
+                }
 
-                    // Close Payment & Mark Paid
-                    if (paymentAccordion) {
-                        paymentAccordion.classList.remove('selected');
-                        paymentAccordion.classList.add('accepted');
-                        const payHeader = paymentAccordion.querySelector('.plan-header-title');
-                        if (payHeader) payHeader.innerText = "Payment Completed";
-                    }
+                // Hide confirmation wrapper
+                if (confirmWrapper) confirmWrapper.style.display = 'none';
 
-                    // Hide Plan Selection if strictly following screenshot?
-                    if (planSelectionAccordion) {
-                        planSelectionAccordion.style.display = 'none';
-                    }
+                // Mark Impl Plan Accepted
+                markimplPlanAccepted();
 
-                    // Start Simulation (Open Progress Accordion)
-                    if (progressAccordion) {
-                        progressAccordion.style.display = 'block';
-                        setTimeout(() => {
-                            progressAccordion.classList.add('selected');
-                        }, 50);
-                    }
+                // Show Plan Selection (Accepted) - effectively hidden from view logic but strictly structured
+                // Requirement: "show Plans first then ask for payment page" ... "after payment... progress accordion"
+                // If we follow the "End Screen" logic, we might want to hide Plan Selection or show it accepted.
+                // Assuming we just show "Payment Completed" and "Progress".
 
-                    const steps = [1, 2, 3, 4, 5, 6];
+                // Add "Payment Completed" Accordion dynamically since we don't need the form anymore
+                const plansList = document.querySelector('.plans-list');
+                const paymentCompletedItem = document.createElement('div');
+                paymentCompletedItem.className = 'plan-item-single accepted';
+                paymentCompletedItem.style.marginBottom = '16px';
+                paymentCompletedItem.innerHTML = `
+                    <div class="plan-header-single">
+                        <div class="plan-header-title">Payment Completed</div>
+                    </div>
+                `;
+                // Insert before Progress Accordion or append
+                if (progressAccordion) {
+                    plansList.insertBefore(paymentCompletedItem, progressAccordion);
+                }
 
-                    for (const stepId of steps) {
-                        const stepEl = document.getElementById(`plan-step-${stepId}`);
-                        if (!stepEl) continue;
+                // Start Progress Simulation
+                startBuildSimulation();
+            }
 
-                        const statusEl = stepEl.querySelector('.plan-group-status');
+            async function startBuildSimulation() {
+                if (progressAccordion) {
+                    progressAccordion.style.display = 'block';
+                    setTimeout(() => progressAccordion.classList.add('selected'), 50);
+                }
 
-                        stepEl.classList.add('loading');
-                        statusEl.innerHTML = '<div class="spinner"></div>';
+                const steps = [1, 2, 3, 4, 5, 6];
 
-                        await new Promise(r => setTimeout(r, 1500));
+                for (const stepId of steps) {
+                    const stepEl = document.getElementById(`plan-step-${stepId}`);
+                    if (!stepEl) continue;
 
-                        stepEl.classList.remove('loading');
-                        stepEl.classList.add('completed');
-                        // Use the styled checkmark
-                        statusEl.innerHTML = '<span class="checkmark-icon">✓</span>';
+                    const statusEl = stepEl.querySelector('.plan-group-status');
 
-                        const textItems = stepEl.querySelectorAll('.plan-group-text');
-                        textItems.forEach(el => el.style.display = 'none');
-                    }
+                    stepEl.classList.add('loading');
+                    statusEl.innerHTML = '<div class="spinner"></div>';
 
-                    // Mark Progress as Accepted too? (Blue check in screenshot?)
-                    if (progressAccordion) {
-                        // progressAccordion.classList.remove('selected'); // Keep open? Or close?
-                        // Screenshot has "Progress >" with checkmark. Usually implies closed.
-                        // I will close it to match "end screen".
-                        progressAccordion.classList.remove('selected');
-                        progressAccordion.classList.add('accepted');
-                    }
+                    await new Promise(r => setTimeout(r, 1500));
 
-                    // Show Success
-                    if (successMsg) {
-                        successMsg.style.display = 'block';
-                        if (inputWrapper) {
-                            inputWrapper.style.display = 'block';
-                        }
-                        const chatHistory = document.querySelector('.chat-history');
-                        if (chatHistory) chatHistory.scrollTop = chatHistory.scrollHeight;
-                    }
-                });
+                    stepEl.classList.remove('loading');
+                    stepEl.classList.add('completed');
+                    statusEl.innerHTML = '<span class="checkmark-icon">✓</span>';
+
+                    const textItems = stepEl.querySelectorAll('.plan-group-text');
+                    textItems.forEach(el => el.style.display = 'none');
+                }
+
+                // Mark Progress Accepted
+                if (progressAccordion) {
+                    progressAccordion.classList.remove('selected');
+                    progressAccordion.classList.add('accepted');
+                }
+
+                // Show Success
+                if (successMsg) {
+                    successMsg.style.display = 'block';
+                    if (inputWrapper) inputWrapper.style.display = 'block';
+                    const chatHistory = document.querySelector('.chat-history');
+                    if (chatHistory) chatHistory.scrollTop = chatHistory.scrollHeight;
+                }
             }
         });
     </script>

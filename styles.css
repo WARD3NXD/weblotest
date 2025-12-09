@@ -1,5 +1,5 @@
 :root {
-    --font-family: 'Inter', sans-serif;
+    --font-family: 'Geist', sans-serif;
     --color-bg: #ffffff;
     --color-text-main: #111111;
     --color-text-secondary: #666666;
@@ -97,6 +97,31 @@ body {
 a.logo:hover {
     color: var(--color-text-main);
 }
+
+/*Navigation*/
+
+.header-nav-list {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-text-main);
+}
+
+
+.header-nav-link {
+    text-decoration: none;
+    color: var(--color-text-main);
+    font-weight: 400;
+    transition: all 0.2s;
+}
+
+.header-nav-link:hover {
+    color: #adadad;
+}
+
 
 /* Hero */
 .hero {
@@ -1165,7 +1190,7 @@ body {
     border: none;
     transform: none;
     content: '✓';
-    font-family: 'Inter', sans-serif;
+    font-family: 'Geist', sans-serif;
     /* Ensure font consistency */
     font-size: 14px;
     color: #fff;

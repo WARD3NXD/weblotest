@@ -11,33 +11,73 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body style="background-color: #f9f9f9;">
+<body>
     <!-- Dashboard Header -->
     <header class="dashboard-header">
-        <a href="index.html" class="logo">Weblo.</a>
-        <div style="display: flex; gap: 24px; align-items: center;">
-            <a href="wizard.html" class="btn btn-dark btn-sm">+ New Website</a>
-            <div class="dashboard-user">User</div>
+        <div class="dashboard-header-left">
+            <a href="index.html" class="logo">Weblo.</a>
+        </div>
+        <nav class="dashboard-nav">
+            <a href="#" class="dash-nav-link">Solutions</a>
+            <a href="#" class="dash-nav-link">Library</a>
+            <a href="#" class="dash-nav-link">Resources</a>
+            <a href="#" class="dash-nav-link">Help Center</a>
+        </nav>
+        <div class="dashboard-header-right">
+            <div class="user-avatar">AB</div>
         </div>
     </header>
 
-    <div class="container" style="padding: 40px 24px;">
-        <h1 style="font-size: 24px; font-weight: 600; margin-bottom: 24px;">Your Websites</h1>
+    <div class="container dashboard-container">
+        <!-- Toolbar -->
+        <div class="dashboard-toolbar">
+            <h1 class="dashboard-welcome">Hello, Alex</h1>
+            <div class="dashboard-actions">
+                <div class="search-wrapper">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search">
+                </div>
+                <a href="wizard.html" class="btn btn-dark btn-sm">Create New Site</a>
+            </div>
+        </div>
 
         <div class="dashboard-grid" id="websiteGrid">
-            <!-- New website will be appended here -->
-
-            <!-- Example existing site -->
+            <!-- Example: Completed Site -->
             <div class="project-card">
-                <div class="project-preview">
-                    <span>Preview Image</span>
-                </div>
+                <div class="project-preview"></div>
                 <div class="project-info">
-                    <div class="project-title">My First Store</div>
-                    <div class="project-url">store.weblo.site</div>
-                    <div style="margin-top: 12px; display: flex; gap: 8px;">
-                        <button class="btn btn-dark btn-sm" style="flex: 1;">Edit</button>
-                        <button class="btn btn-outline btn-sm">View</button>
+                    <div class="project-title">SweetCrust</div>
+                    <div class="project-meta">
+                        <span>Completed</span>
+                        <span>09-12-2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example: Error Site -->
+            <div class="project-card">
+                <div class="project-preview"></div>
+                <div class="project-info">
+                    <div class="project-title">Rockify</div>
+                    <div class="project-meta">
+                        <span>Error</span>
+                        <span>09-12-2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example: In Progress Site -->
+            <div class="project-card">
+                <div class="project-preview"></div>
+                <div class="project-info">
+                    <div class="project-title">Fast Food Restaurant</div>
+                    <div class="project-meta">
+                        <span>In Progress</span>
+                        <span>09-12-2025</span>
                     </div>
                 </div>
             </div>
@@ -48,29 +88,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const data = loadData();
-            // Check if we just built something (simple check: if data has plan)
+            // Check if we just built something that isn't already hardcoded
             if (data.businessName || data.plan) {
-                // Create card for the new website
-                const grid = document.getElementById('websiteGrid');
-
-                const card = document.createElement('div');
-                card.className = 'project-card';
-                card.innerHTML = `
-                    <div class="project-preview" style="background: #e0f7fa; color: #006064;">
-                        <span>${data.industry || 'Website'}</span>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-title">${data.businessName || 'Untitled Project'}</div>
-                        <div class="project-url">${(data.businessName || 'site').toLowerCase().replace(/\s+/g, '')}.weblo.site</div>
-                        <div style="margin-top: 12px; display: flex; gap: 8px;">
-                            <button class="btn btn-dark btn-sm" style="flex: 1;">Edit</button>
-                            <button class="btn btn-outline btn-sm">View</button>
-                        </div>
-                    </div>
-                `;
-
-                // Prepend to grid
-                grid.insertBefore(card, grid.firstChild);
+                // Logic to append strictly new sites could go here, 
+                // but for now we rely on the hardcoded examples to match the screenshot.
+                // If a user just finished the wizard, we might want to inject it.
             }
         });
     </script>
